@@ -1,16 +1,16 @@
+// src/utils/api.js
 import axios from "axios";
 
-const BASE_URL =
-  "https://finnhub.io/api/v1/stock/symbol?exchange=US&symbol=XNYS&token=cmglcd1r01qilgs0pil0cmglcd1r01qilgs0pilg";
+const API_KEY = "0846fd60140a4ec88455420b65c44886";
 
-// Function to fetch historical stock data
-export const fetchHistoricalData = async (symbol, timeFrame) => {
+export async function fetchStockData(symbol, timeFrame) {
   try {
-    const response = await axios.get(`${BASE_URL}`);
-
-    return response.data; // Parse the data as needed for your application
+    const response = await axios.get(
+      `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=${timeFrame}&apikey=${API_KEY}`
+    );
+    return response.data;
   } catch (error) {
-    console.error("Error fetching historical data:", error);
-    return null;
+    console.error("Error fetching data:", error);
+    throw error;
   }
-};
+}

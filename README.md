@@ -4,6 +4,8 @@
 
 Stock Analysis Dashboard is a web-based application that allows users to enter a stock symbol and view its data represented as a line graph. The application supports viewing data in various timeframes: daily, weekly, and monthly. It's built using React and Vite, and it utilizes the Twelve Data API for fetching stock data.
 
+[Live here](https://stock-dashboard-zeta.vercel.app/)
+
 ![Alt text](image-2.png)
 
 ### Features

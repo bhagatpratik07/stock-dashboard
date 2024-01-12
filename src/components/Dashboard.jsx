@@ -102,6 +102,8 @@ export default function Dashboard() {
                   <Line
                     data={stockData}
                     options={{
+                      responsive: true,
+
                       scales: {
                         x: {
                           grid: {

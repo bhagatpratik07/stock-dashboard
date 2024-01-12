@@ -4,12 +4,16 @@
 
 Stock Analysis Dashboard is a web-based application that allows users to enter a stock symbol and view its data represented as a line graph. The application supports viewing data in various timeframes: daily, weekly, and monthly. It's built using React and Vite, and it utilizes the Twelve Data API for fetching stock data.
 
+![Alt text](image-2.png)
+
 ### Features
 
 - Stock Symbol Search: Enter any stock symbol to fetch and display its data.
 - Timeframe Selection: Choose between daily, weekly, or monthly views for stock data.
 - Line Graph Representation: Stock data is visualized using a line graph for clear and concise representation.
 - Responsive Design: Compatible with various devices and screen sizes.
+
+  ![Alt text](image-1.png)
 
 ## Technologies
 

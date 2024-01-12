@@ -69,6 +69,7 @@ export default function Dashboard() {
           <div className="mb-4 p-4 bg-white dark:bg-gray-800 rounded shadow">
             <div className="flex flex-col md:flex-row justify-between mb-4">
               <input
+                placeholder="Enter stock symbol"
                 type="text"
                 value={stockSymbol}
                 onChange={handleSymbolChange}

@@ -50,7 +50,12 @@ export default function Dashboard() {
       }
     };
 
-    fetchData();
+    // using debouncing to delay fetching data to avoid time limits
+    const timeoutId = setTimeout(() => {
+      fetchData();
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
   }, [stockSymbol, timeFrame]);
 
   const handleSymbolChange = (e) => {

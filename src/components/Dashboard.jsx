@@ -4,15 +4,19 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import { useTheme } from "../contexts/ThemeContext";
 import { useStock } from "../contexts/StockContext";
-import { fetchTimeSeries } from "../utils/api";
+import { fetchTimeSeries, fetchAllStocks } from "../utils/api";
+import { LineChart } from "./LineChart";
+import { StockInput } from "./StockInput";
 
 export default function Dashboard() {
   const { stockSymbol, setStockSymbol } = useStock();
   const [timeFrame, setTimeFrame] = useState("1min");
   const [stockData, setStockData] = useState({});
   const [error, setError] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
 
   const { theme } = useTheme();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +29,7 @@ export default function Dashboard() {
           }));
 
           setStockData({
-            labels: chartData.map((d) => d.x),
+            labels: chartData?.map((d) => d.x),
             datasets: [
               {
                 label: `${stockSymbol} Stock Price`,
@@ -36,17 +40,9 @@ export default function Dashboard() {
               },
             ],
           });
-          setError(null);
-        } else {
-          setError(
-            `Error displaying data for ${stockSymbol} due to rate limits. Please try again in some time.`
-          );
         }
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError(
-          `Error displaying data for ${stockSymbol} due to rate limits. Please try again in some time.`
-        );
       }
     };
 
@@ -58,72 +54,33 @@ export default function Dashboard() {
     return () => clearTimeout(timeoutId);
   }, [stockSymbol, timeFrame]);
 
-  const handleSymbolChange = (e) => {
-    setStockSymbol(e.target.value.toUpperCase());
-    setError(null);
-  };
+  // useEffect(() => {
+  //   const fetchSuggestions = async () => {
+  //     const symbolSuggestions = await fetchAllStocks();
+  //     const symbolsArray = symbolSuggestions?.data?.data?.map(
+  //       (stock) => stock.symbol
+  //     );
+  //     setSuggestions(symbolsArray);
+  //   };
 
-  const handleTimeFrameChange = (e) => {
-    setTimeFrame(e.target.value);
-  };
+  //   fetchSuggestions();
+  // }, []);
 
   return (
     <div className={`${theme === "dark" ? "dark" : ""}`}>
       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
         <div className="container mx-auto p-4">
           <div className="mb-4 p-4 bg-white dark:bg-gray-800 rounded shadow">
-            <div className="flex flex-col md:flex-row justify-between mb-4">
-              <input
-                placeholder="Enter stock symbol"
-                type="text"
-                value={stockSymbol}
-                onChange={handleSymbolChange}
-                className={`p-2 mb-2 md:mb-0 border rounded w-full md:w-auto ${
-                  theme === "dark"
-                    ? "bg-gray-700 text-gray-300 border-gray-600"
-                    : "text-gray-900 bg-white border-gray-300"
-                } focus:ring-blue-500 focus:border-blue-500`}
-              />
-              <select
-                value={timeFrame}
-                onChange={handleTimeFrameChange}
-                className={`p-2 border rounded w-full md:w-auto ${
-                  theme === "dark"
-                    ? "bg-gray-700 text-gray-300 border-gray-600"
-                    : "text-gray-900 bg-white border-gray-300"
-                } focus:ring-blue-500 focus:border-blue-500`}
-              >
-                <option value="1min">1 Minute</option>
-                <option value="1day">Daily</option>
-                <option value="1week">Weekly</option>
-                <option value="1month">Monthly</option>
-              </select>
-            </div>
+            <StockInput
+              setError={setError}
+              timeFrame={timeFrame}
+              setTimeFrame={setTimeFrame}
+            />
             {error ? (
               <div className="text-red-500">{error}</div>
             ) : (
               <div>
-                {stockData.datasets && (
-                  <Line
-                    data={stockData}
-                    options={{
-                      responsive: true,
-
-                      scales: {
-                        x: {
-                          grid: {
-                            color: "rgba(255, 255, 255, 0.1)",
-                          },
-                        },
-                        y: {
-                          grid: {
-                            color: "rgba(255, 255, 255, 0.1)",
-                          },
-                        },
-                      },
-                    }}
-                  />
-                )}
+                <LineChart stockData={stockData} />
               </div>
             )}
           </div>

@@ -10,6 +10,13 @@ export const fetchTimeSeries = async (symbol, timeFrame) => {
   return response;
 };
 
+export const searchSymbol = async (symbol) => {
+  const response = await axios.get(
+    `https://api.twelvedata.com/stocks?symbol=${symbol}&apikey=${API_KEY}`
+  );
+  return response;
+};
+
 export const fetchAllStocks = async () => {
   const response = await axios.get(`https://api.twelvedata.com/stocks`);
   return response;

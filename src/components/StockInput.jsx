@@ -33,7 +33,6 @@ export const StockInput = ({ setError, timeFrame, setTimeFrame }) => {
             : "text-gray-900 bg-white border-gray-300"
         } focus:ring-blue-500 focus:border-blue-500`}
       />
-
       <select
         value={timeFrame}
         onChange={handleTimeFrameChange}

@@ -30,8 +30,7 @@ To set up the Stock Analysis Dashboard on your local machine, follow these steps
 Clone the Repository:
 
 ```bash
-git clone https://github.com/your-username/stock-analysis-dashboard.git
-cd stock-analysis-dashboard
+git clone https://github.com/bhagatpratik07/stock-dashboard
 ```
 
 Install Dependencies:

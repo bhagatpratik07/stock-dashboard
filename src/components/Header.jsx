@@ -1,4 +1,6 @@
 import { useTheme } from "../contexts/ThemeContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
@@ -9,7 +11,11 @@ export default function Header() {
         onClick={toggleTheme}
         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none transition"
       >
-        {theme === "light" ? "Dark Mode" : "Light Mode"}
+        {theme === "light" ? (
+          <FontAwesomeIcon icon={faMoon} />
+        ) : (
+          <FontAwesomeIcon icon={faSun} />
+        )}
       </button>
     </header>
   );
